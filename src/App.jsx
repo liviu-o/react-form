@@ -6,27 +6,27 @@ function App() {
   const palaceList = [
     {
       name: "Hampton Court Palace",
-      value: "hamptonCourtPalace",
+      value: "Hampton Court Palace",
     },
     {
       name: "Tower Of London",
-      value: "towerOfLondon",
+      value: "Tower Of London",
     },
     {
       name: "Banqueting House",
-      value: "banquetingHouse",
+      value: "Banqueting House",
     },
     {
       name: "Kensington Palace",
-      value: "kensingtonPalace",
+      value: "Kensington Palace",
     },
     {
       name: "Kew Palace",
-      value: "kewPalace",
+      value: "Kew Palace",
     },
     {
       name: "Hillsborough Castle",
-      value: "hillsboroughCastle",
+      value: "Hillsborough Castle",
     },
   ];
 

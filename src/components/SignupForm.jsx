@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
-import { useState } from "react";
+import * as Yup from "yup";
+import axios from "axios";
 import "./SignupForm.css";
 
 const SignupForm = (props) => {
@@ -11,11 +12,26 @@ const SignupForm = (props) => {
   const formik = useFormik({
     initialValues: {
       email: "",
-      selectedPalace: "",
-      selectedCountry: "",
+      selectedPalace: "Hampton Court Palace",
+      selectedCountry: "United Kingdom",
     },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required"),
+    }),
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
+      axios({
+        method: "POST",
+        url: "https://prod-10.westeurope.logic.azure.com:443/workflows/1705047b12b84f3387225666a8109aa9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tMgTRO4EYyWPJEaof6_e5jw6fsSNoboHF8sNzNhFauk",
+        values: values,
+      })
+        .then(function (res) {
+          console.log(res);
+          alert("Successfully signed up!");
+        })
+        .catch(function (res) {
+          console.log(res);
+        });
     },
   });
   return (
@@ -31,6 +47,9 @@ const SignupForm = (props) => {
           onChange={formik.handleChange}
           value={formik.values.email}
         />
+        {formik.errors.email ? (
+          <div className="text-red-600">{formik.errors.email}</div>
+        ) : null}
         <small
           id="exampleInputGroup1__BV_description_"
           className="form-text text-muted"
