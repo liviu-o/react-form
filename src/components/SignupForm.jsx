@@ -12,11 +12,14 @@ const SignupForm = (props) => {
   const formik = useFormik({
     initialValues: {
       Email: "",
-      Palace: "select",
-      Country: "select",
+      Palace: "",
+      Country: "",
     },
     validationSchema: Yup.object({
       Email: Yup.string().email("Invalid email address").required("Required"),
+      Palace: Yup.string()
+        .required("Please select a palace")
+        .notOneOf(["Select"], "Please select a palace."),
     }),
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -27,8 +30,8 @@ const SignupForm = (props) => {
           Email: values.Email,
           Palace: values.Palace,
           Country: values.Country,
-          MAC: "00:00:00:00:00:00"
-        }
+          MAC: "00:00:00:00:00:00",
+        },
       })
         .then(function (res) {
           console.log(res);
@@ -37,6 +40,25 @@ const SignupForm = (props) => {
         .catch(function (res) {
           console.log(res);
         });
+      let redirectUrl = "";
+      switch (formik.values.Palace) {
+        case "Hampton Court Palace":
+          redirectUrl = "https://www.hrp.org.uk/hampton-court-palace/";
+          break;
+        case "Kensington Palace":
+          redirectUrl = "https://www.hrp.org.uk/kensington-palace/";
+          break;
+        case "Banqueting House":
+          redirectUrl = "https://www.hrp.org.uk/banqueting-house";
+          break;
+        case "Kew Palace":
+          redirectUrl = "https://www.hrp.org.uk/kew-palace";
+          break;
+        default:
+          redirectUrl = "https://www.hrp.org.uk";
+      }
+
+      window.location.href = redirectUrl;
     },
   });
   return (
@@ -79,6 +101,9 @@ const SignupForm = (props) => {
               </option>
             ))}
           </select>
+          {formik.errors.Palace ? (
+            <div className="text-red-600">{formik.errors.Palace}</div>
+          ) : null}
         </label>
       </div>
       <div className="py-2">

@@ -5,6 +5,10 @@ import Header from "./components/Header";
 function App() {
   const palaceList = [
     {
+      name: "Select",
+      value: "Select",
+    },
+    {
       name: "Hampton Court Palace",
       value: "Hampton Court Palace",
     },
@@ -31,6 +35,10 @@ function App() {
   ];
 
   const countryList = [
+    {
+      name: "Select",
+      value: "Select",
+    },
     {
       name: "United Kingdom",
       value: "GB",
