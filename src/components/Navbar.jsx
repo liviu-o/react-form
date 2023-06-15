@@ -1,11 +1,11 @@
 import HRPLogo from "../Logos/hrp-logo.svg";
 import WifiIcon from "../Logos/Wireless-icon.svg";
-import "./Header.css";
 
-export default function Header() {
+export default function Navbar() {
   return (
     <div className="flex bg-slate-700 justify-between items-center h-[100px] px-20 bg-[#00566b]">
-      <h1></h1>
+      <img className="h-[50px] text-white" src={HRPLogo} />
+      <img className="h-[50px] text-white" src={WifiIcon} />
     </div>
   );
 }

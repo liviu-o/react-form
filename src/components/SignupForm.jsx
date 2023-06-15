@@ -1,142 +1,130 @@
-import {Formik, Form} from "formik";
+import { Formik, Form } from "formik";
+import { useState } from "react";
 import * as Yup from "yup";
 import axios from "axios";
+import Modal from "./Modal";
 import "./SignupForm.css";
-import Button from './Button';
+import ENV from "../env";
+import Button from "./Button";
+import FormikControl from "./FormikControl";
 
-const initialValues = {
-  email: "",
-  palace: "",
-  country: "",
-}
-
-const onSubmit = values => {
-  alert(JSON.stringify(values, null, 2));
-      //Call api
-      axios({
-        method: "post",
-        url: "https://prod-01.westeurope.logic.azure.com:443/workflows/ec35268b892f4f1fb71b9259a761cb95/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fEQpHovIyBNYS5VsPXFvaBPaQlBRgt2diFWLfH6cf5c",
-        data: {
-          email: values.email,
-          palace: values.Palace,
-          country: values.Country,
-          MAC: "00:00:00:00:00:00",
-        },
-      })
-        .then(function (res) {
-          console.log(res);
-          alert("Successfully signed up!");
-        })
-        .catch(function (res) {
-          console.log(res);
-        });
-      let redirectUrl = "";
-      switch (formik.values.Palace) {
-        case "Hampton Court Palace":
-          redirectUrl = "https://www.hrp.org.uk/hampton-court-palace/";
-          break;
-        case "Kensington Palace":
-          redirectUrl = "https://www.hrp.org.uk/kensington-palace/";
-          break;
-        case "Banqueting House":
-          redirectUrl = "https://www.hrp.org.uk/banqueting-house";
-          break;
-        case "Kew Palace":
-          redirectUrl = "https://www.hrp.org.uk/kew-palace";
-          break;
-        default:
-          redirectUrl = "https://www.hrp.org.uk";
-      }
-      window.location.href = redirectUrl;
-}
-
-
-  const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email address").required("Required"),
-    palace: Yup.string()
-      .required("Please select a palace")
-      .notOneOf(["Select"], "Please select a palace."),
-  });
-
+const validationSchema = Yup.object({
+  email: Yup.string().email("Invalid email address").required("Required"),
+  palace: Yup.string().required("Required"),
+});
 
 const SignupForm = (props) => {
-  const { palaces } = props;
-  const { countries } = props;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { palaces, countries } = props;
 
-  // Pass the useFormik() hook initial form values and a submit function that will
-  // be called when the form is submitted
-  console.log(formik.values)
-  
+  const openModal = () => {
+    setTimeout(() => {
+      setIsModalOpen(true);
+    }, 3000);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const initialValues = {
+    email: "",
+    palace: "",
+    country: "",
+  };
+
+  const onSubmit = (values) => {
+    alert(JSON.stringify(values, null, 2));
+    //Call api
+    let postData = {
+      email: values.email,
+      country: values.country,
+      MAC: window.location.pathname,
+      palace: values.palace,
+    };
+
+    axios
+      .post(ENV, postData)
+      .then((result) => {
+        console.log(result, postData);
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+
+    openModal();
+    let redirectUrl = "";
+    switch (values.palace) {
+      case "Hampton Court Palace":
+        redirectUrl = "https://www.hrp.org.uk/hampton-court-palace/";
+        break;
+      case "Tower Of London":
+        redirectUrl = "https://www.hrp.org.uk/tower-of-london/";
+        break;
+      case "Kensington Palace":
+        redirectUrl = "https://www.hrp.org.uk/kensington-palace/";
+        break;
+      case "Banqueting House":
+        redirectUrl = "https://www.hrp.org.uk/banqueting-house";
+        break;
+      case "Kew Palace":
+        redirectUrl = "https://www.hrp.org.uk/kew-palace";
+        break;
+      default:
+        redirectUrl = "https://www.hrp.org.uk";
+    }
+    setTimeout(() => {
+      window.location = redirectUrl;
+    }, 4000);
+  };
+
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-      <Form className="form-component">
-        <label htmlFor="email">Email Address</label>
-        <div className="py-2">
-          <input
-            className="form-control block w-full"
-            id="email"
-            name="email"
+    <>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      >
+        <Form className="form-component p-20">
+          <FormikControl
+            control="input"
             type="email"
-            placeholder="Enter email address"
-            // onChange={formik.handleChange}
-            // onBlur={formik.handleBlur}
-            // value={formik.values.email}
-            {...formik.getFieldProps('email')}
+            label="Email address:*"
+            name="email"
           />
-          {formik.touched.email && formik.errors.email ? (
-            <div className="text-red-600">{formik.errors.email}</div>
-          ) : null}
           <small
             id="exampleInputGroup1__BV_description_"
             className="form-text text-muted"
           >
             We'll never share your email with anyone else.
           </small>
-        </div>
-        <div className="py-2">
-          <label>
-            Select an option:
-            <select
-              className="select-item"
-              id="palace"
+          <div className="py-2">
+            <FormikControl
+              control="select"
+              label="The palace I am visiting:*"
               name="palace"
-              type="text"
-              {...formik.getFieldProps('palace')}
-            >
-              {palaces.map((p) => (
-                <option key={p.value} value={p.value}>
-                  {p.name}
-                </option>
-              ))}
-            </select>
-            {formik.touched.palace && formik.errors.palace ? (
-              <div className="text-red-600">{formik.errors.palace}</div>
-            ) : null}
-          </label>
-        </div>
-        <div className="py-2">
-          <label>
-            Select an option:
-            <select
-              className="select-item"
-              id="country"
+              options={palaces}
+            />
+            <FormikControl
+              control="select"
+              label="The country I am visiting from:"
               name="country"
-              type="text"
-              value={formik.values.country}
-              onChange={formik.handleChange}
-            >
-              {countries.map((p) => (
-                <option key={p.value} value={p.value}>
-                  {p.name}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <Button type="submit" title={'Sounds Great, Sign me up'} />
-        <Button type="reset" title={'Skip'} />
-      </Form>
-     </Formik >
+              options={countries}
+            />
+          </div>
+          <Button type="submit" title={"Sounds Great, Sign me up"} />
+          <Button type="reset" title={"Skip"} />
+        </Form>
+      </Formik>
+
+      {isModalOpen && (
+        <Modal
+          title="Submission Successful"
+          content="Thank you for submitting the form!"
+          onClose={closeModal}
+        />
+      )}
+    </>
   );
 };
 

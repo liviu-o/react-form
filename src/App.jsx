@@ -1,5 +1,6 @@
 import "./App.css";
 import SignupForm from "./components/SignupForm";
+import Navbar from "./components/Navbar";
 import Header from "./components/Header";
 
 function App() {
@@ -102,7 +103,7 @@ function App() {
   ];
   return (
     <div>
-      <Header />
+      <Navbar />
       <SignupForm palaces={palaceList} countries={countryList} />
     </div>
   );

@@ -1,0 +1,46 @@
+/* Modal container */
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+}
+
+/* Modal content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 4px;
+  width: 400px;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #333;
+}
+
+/* Other styles */
+h2 {
+  margin-top: 0;
+}
+
+p {
+  margin-bottom: 0;
+}
