@@ -1,7 +1,7 @@
 import "./App.css";
 import SignupForm from "./components/SignupForm";
 import Navbar from "./components/Navbar";
-import Header from "./components/Header";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
   const palaceList = [
@@ -102,10 +102,12 @@ function App() {
     },
   ];
   return (
-    <div>
-      <Navbar />
-      <SignupForm palaces={palaceList} countries={countryList} />
-    </div>
+    <ChakraProvider>
+      <div className="App">
+        <Navbar />
+        <SignupForm palaces={palaceList} countries={countryList} />
+      </div>
+    </ChakraProvider>
   );
 }
 

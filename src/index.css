@@ -7,3 +7,33 @@
     @apply w-6/12;
   }
 }
+
+@font-face {
+  font-family: "FS Industrie";
+  src: url("./fonts/Condensed/Web/Bold/FSIndustrieCd-Bold.woff2")
+      format("woff2"),
+    url("./fonts/Condensed/Web/Bold/FSIndustrieCd-Bold.woff") format("woff");
+  /* Add additional font properties if needed */
+}
+
+body {
+  color: #2c3e50;
+  font-size: 16px;
+  font-family: "Open sans", Helvetica, Arial, sans-serif;
+}
+
+h1 {
+  font-family: "FS Industrie", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+p {
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
