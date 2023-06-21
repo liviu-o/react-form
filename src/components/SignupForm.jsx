@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
 import Modal from "./Modal";
-import "./SignupForm.css";
 import ENV from "../env";
 import FormikControl from "./FormikControl";
 import Header from "./Header";
@@ -96,7 +95,7 @@ const SignupForm = (props) => {
   };
 
   return (
-    <div className="text-left mx-auto px-20 py-[24px]">
+    <div className="text-left p-4 md:mx-auto md:px-20 md:py-[24px]">
       {isModalOpen && (
         <Modal
           title="Form successfully submitted"
@@ -111,7 +110,7 @@ const SignupForm = (props) => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        <Form className="max-w-[65%] text-[#2c3e50]">
+        <Form className="md:max-w-[65%] text-[#2c3e50]">
           <div className="mb-[16px]">
             <FormikControl
               control="chakrainput"

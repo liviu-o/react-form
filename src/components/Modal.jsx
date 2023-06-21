@@ -1,10 +1,9 @@
 import React from "react";
-import "./Modal.css";
 
 const Modal = ({ title, onClose, email }) => {
   return (
     <div className="modal">
-      <div className="modal-content model-content__tray">
+      <div className="modal-content">
         <span className="close" onClick={onClose}>
           &times;
         </span>

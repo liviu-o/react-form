@@ -1,12 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer components {
-  .form-component {
-    @apply w-6/12;
-  }
-}
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @font-face {
   font-family: "FS Industrie";
@@ -16,32 +10,78 @@
   /* Add additional font properties if needed */
 }
 
-body {
-  color: #2c3e50;
-  font-size: 16px;
-  font-family: "Open sans", Helvetica, Arial, sans-serif;
+@layer base {
+  body {
+    @apply text-[#2c3e50] text-[1rem];
+  }
+
+  h1,
+  h2 {
+    @apply font-sans font-normal tracking-wide mb-[0.5rem] text-[#2c3e50];
+  }
+
+  h2 {
+    @apply font-[2.5rem];
+  }
+
+  h2 {
+    @apply font-[1.8rem];
+  }
+
+  p {
+    @apply text-[1rem] mb-[1rem] font-normal font-body text-[#2c3e50] leading-6 px-1;
+  }
+
+  button[type="submit"] {
+    @apply w-full bg-[#212121] py-[10px] px-[20px] my-[4px] font-sans uppercase tracking-wide rounded-[50px];
+  }
+  button[type="submit"]:hover {
+    @apply opacity-90;
+  }
+  button[type="button"] {
+    @apply w-full bg-[#636363] py-[10px] px-[20px] my-[4px] font-sans uppercase tracking-wide rounded-[50px];
+  }
+  button[type="button"]:hover {
+    @apply opacity-90;
+  }
+  label {
+    @apply text-[#2c3e50] !font-bold leading-6 !font-body !opacity-90;
+  }
+
+  a {
+    @apply text-black relative inline-block;
+  }
+
+  a::after {
+    @apply content-[''] absolute bottom-0 left-0 w-full h-[30%] bg-[#444] opacity-50 transition-all duration-100 ease-linear;
+  }
+
+  a:hover::after {
+    @apply h-[90%];
+  }
 }
 
-h1,
-h2 {
-  font-family: "FS Industrie", sans-serif;
-  font-weight: 400;
-  letter-spacing: 0.025em;
-  font-size: 2.2rem;
-  margin-bottom: 0.5rem;
-  line-height: 1.2;
-  color: #2c3e50;
-}
+@layer components {
+  .form-component {
+    @apply w-6/12;
+  }
 
-h2 {
-  font-size: 1.8rem;
-}
-
-p {
-  color: #2c3e50;
-  font-weight: 400;
-  line-height: 1.5;
-  margin-bottom: 16px;
-  margin-top: 0;
-  font-family: "Open sans", Helvetica, Arial, sans-serif;
+  .modal {
+    @apply w-[600px] fixed right-[20px] bg-[#212121] text-white opacity-90 p-[10px];
+  }
+  modal.content {
+    @apply relative p-[20px] text-white;
+  }
+  .modal-content p {
+    @apply text-[18px] text-white;
+  }
+  .modal-content h2 {
+    @apply text-white text-[2rem];
+  }
+  .close {
+    @apply absolute top-[10px] right-[10px] font-[20px] font-bold text-[#aaa];
+  }
+  .close:hover {
+    @apply text-[#333];
+  }
 }
