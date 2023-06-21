@@ -1,12 +1,14 @@
-import { Formik, Form, useFormikContext } from "formik";
-import { useState } from "react";
+import { Formik, Form } from "formik";
+import { useState, useRef } from "react";
 import * as Yup from "yup";
+import { Button } from "@chakra-ui/react";
 import axios from "axios";
 import Modal from "./Modal";
 import "./SignupForm.css";
 import ENV from "../env";
 import FormikControl from "./FormikControl";
 import Header from "./Header";
+import FooterComponent from "./FooterComponent";
 
 const validationSchema = Yup.object({
   email: Yup.string().email("Invalid email address").required("Required"),
@@ -18,16 +20,9 @@ const validationSchema = Yup.object({
 const SignupForm = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { palaces, countries } = props;
-
-  const openModal = () => {
-    setTimeout(() => {
-      setIsModalOpen(true);
-    }, 3000);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const ref = useRef(null);
+  const [showLoader, setShowLoader] = useState(false);
+  const [showLoader1, setShowLoader1] = useState(false);
 
   const initialValues = {
     email: "",
@@ -35,21 +30,9 @@ const SignupForm = (props) => {
     country: "",
   };
 
-  const handleReset = () => {
-    const formik = useFormikContext();
-    const { values } = formik;
-
-    // Reset form values
-    formik.resetForm();
-
-    // Access the values for further processing if needed
-    console.log(values);
-  };
-
   const onSubmit = (values) => {
     console.log(values);
-    alert(JSON.stringify(values, null, 2));
-    //Call api
+    setShowLoader(true);
     let postData = {
       email: values.email,
       country: values.country,
@@ -61,14 +44,36 @@ const SignupForm = (props) => {
       .post(ENV, postData)
       .then((result) => {
         console.log(result, postData);
+        setTimeout(() => {
+          window.location = getRedirectUrl();
+        }, 4000);
       })
       .catch((errors) => {
         console.log(errors);
       });
-
     openModal();
+  };
+
+  const onSkip = () => {
+    setShowLoader1(true);
+    setTimeout(() => {
+      window.location = getRedirectUrl();
+    }, 4000);
+  };
+
+  const openModal = () => {
+    setTimeout(() => {
+      setIsModalOpen(true);
+    }, 3000);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const getRedirectUrl = () => {
     let redirectUrl = "";
-    switch (values.palace) {
+    switch (ref.current.values.palace) {
       case "Hampton Court Palace":
         redirectUrl = "https://www.hrp.org.uk/hampton-court-palace/";
         break;
@@ -87,22 +92,21 @@ const SignupForm = (props) => {
       default:
         redirectUrl = "https://www.hrp.org.uk";
     }
-    setTimeout(() => {
-      window.location = redirectUrl;
-    }, 4000);
+    return redirectUrl;
   };
 
   return (
-    <div className="body-container text-left mx-auto px-4 py-[24px]">
+    <div className="text-left mx-auto px-20 py-[24px]">
       {isModalOpen && (
         <Modal
-          title="Submission Successful"
-          content="Thank you for submitting the form!"
+          title="Form successfully submitted"
           onClose={closeModal}
+          email={ref.current.values.email}
         />
       )}
       <Header />
       <Formik
+        innerRef={ref}
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
@@ -114,6 +118,7 @@ const SignupForm = (props) => {
               type="email"
               label="Email address: *"
               name="email"
+              placeholder="Enter email address"
             />
             <small
               id="exampleInputGroup1__BV_description_"
@@ -138,23 +143,28 @@ const SignupForm = (props) => {
               className="mb-[16px]"
             />
           </div>
-          <button
-            className="w-full block bg-black text-white my-2 p-2 rounded-sm"
+          <Button
             type="submit"
-            title="Sounds Great, Sign me up"
+            onSubmit={onSubmit}
+            isLoading={showLoader}
+            disabled={showLoader}
+            colorScheme="white"
           >
             Sounds Great, Sign me up
-          </button>
-          <button
-            className="w-full block bg-black text-white my-2 p-10 rounded-sm"
-            type="reset"
-            onClick={handleReset}
-            title={"Skip"}
+          </Button>
+          <Button
+            type="button"
+            onClick={onSkip}
+            isLoading={showLoader1}
+            disabled={showLoader1}
+            colorScheme="white"
+            loadingText="Skip"
           >
             Skip
-          </button>
+          </Button>
         </Form>
       </Formik>
+      <FooterComponent />
     </div>
   );
 };

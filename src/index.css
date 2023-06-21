@@ -22,18 +22,26 @@ body {
   font-family: "Open sans", Helvetica, Arial, sans-serif;
 }
 
-h1 {
+h1,
+h2 {
   font-family: "FS Industrie", sans-serif;
   font-weight: 400;
   letter-spacing: 0.025em;
   font-size: 2.2rem;
   margin-bottom: 0.5rem;
   line-height: 1.2;
+  color: #2c3e50;
+}
+
+h2 {
+  font-size: 1.8rem;
 }
 
 p {
+  color: #2c3e50;
   font-weight: 400;
   line-height: 1.5;
   margin-bottom: 16px;
   margin-top: 0;
+  font-family: "Open sans", Helvetica, Arial, sans-serif;
 }
