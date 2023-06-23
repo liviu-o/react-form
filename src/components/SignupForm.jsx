@@ -111,7 +111,7 @@ const SignupForm = (props) => {
         onSubmit={onSubmit}
       >
         <Form className="md:max-w-[65%] text-[#2c3e50]">
-          <div className="mb-[16px]">
+          <div>
             <FormikControl
               control="chakrainput"
               type="email"
@@ -148,6 +148,7 @@ const SignupForm = (props) => {
             isLoading={showLoader}
             disabled={showLoader}
             colorScheme="white"
+            loadingText="Sounds Great, Sign me up"
           >
             Sounds Great, Sign me up
           </Button>

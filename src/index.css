@@ -17,7 +17,7 @@
 
   h1,
   h2 {
-    @apply font-sans font-normal tracking-wide mb-[0.5rem] text-[#2c3e50];
+    @apply font-sans font-normal leading-6 tracking-wide mb-[1rem] text-[#2c3e50];
   }
 
   h2 {
