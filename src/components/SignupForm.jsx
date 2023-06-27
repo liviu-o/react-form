@@ -129,7 +129,7 @@ const SignupForm = (props) => {
           <div className="py-2">
             <FormikControl
               control="chakraselect"
-              label="The palace I am visiting:*"
+              label="The palace I am visiting: *"
               name="palace"
               options={palaces}
               className="mb-[16px]"

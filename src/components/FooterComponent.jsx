@@ -1,6 +1,6 @@
 import React from "react";
 
-const FooterComponent = (props) => {
+const FooterComponent = () => {
   return (
     <div className="mt-10">
       <p>

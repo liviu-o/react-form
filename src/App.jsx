@@ -2,7 +2,6 @@ import "./App.css";
 import SignupForm from "./components/SignupForm";
 import Navbar from "./components/Navbar";
 import { ChakraProvider } from "@chakra-ui/react";
-import FooterComponent from "./components/FooterComponent";
 
 function App() {
   const palaceList = [
